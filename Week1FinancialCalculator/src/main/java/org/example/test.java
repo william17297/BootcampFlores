@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Scanner;
 
-public class Calculator2 {
+public class test {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter initial deposit:");
@@ -15,8 +15,6 @@ public class Calculator2 {
         double yearsInvested = scanner.nextDouble(); // This is t
 
         double futureValue = initialDeposit * Math.pow(1 + ((yearlyInterestRate/365)/100) , 365 * yearsInvested);
-        double interest = futureValue - initialDeposit;
-        System.out.println("You would have earned $"+ futureValue + " balance\n" + "The interest earned is " + interest );
-
+        System.out.println("You  would have earned $"+ futureValue + " in interest");
     }
 }
