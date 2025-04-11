@@ -24,7 +24,12 @@ public class Main {
     //Used to calculate M
     double totalMonthlyPayment = loanLength * 12; //This is n
 
-    double monthlyPayment = principal*(Math.abs(perMonthInterestRate*Math.pow(1+perMonthInterestRate , totalMonthlyPayment)) / Math.abs(Math.pow(1 + perMonthInterestRate , totalMonthlyPayment)-1));
-        System.out.println(monthlyPayment);
+    double monthlyPayment = principal*(Math.abs(perMonthInterestRate*Math.pow(1+perMonthInterestRate , totalMonthlyPayment))
+            / Math.abs(Math.pow(1 + perMonthInterestRate , totalMonthlyPayment)-1)); //This is M
+
+    double totalInterest = (monthlyPayment * totalMonthlyPayment) - principal;
+
+    System.out.println("Your monthly payment is:\n" + monthlyPayment + "\nYour total interest is:\n" + totalInterest);
+
     }
 }
