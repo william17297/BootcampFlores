@@ -11,7 +11,13 @@ public class Main {
         float hoursWorked = scanner.nextFloat();
         System.out.println("What is your hourly pay?");
         float payRate = scanner.nextFloat();
-        float grossPay = hoursWorked * payRate;
+        float grossPay = 0f;
+        if (hoursWorked > 40){
+            grossPay = hoursWorked * payRate * 1.5f;
+        }
+        else {
+             grossPay = hoursWorked * payRate;
+        }
         System.out.println("Hi " +  name + " your gross pay is " + grossPay);
 
     }
