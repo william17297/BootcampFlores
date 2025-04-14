@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Calculator3 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What is the present value of the annuity?");
+        System.out.println("What is the monthly payout?");
         double pmt = scanner.nextDouble(); //This is PMT
         System.out.println("What is the interest?");
         double  yearlyInterestRate = scanner.nextDouble(); //To solve r
