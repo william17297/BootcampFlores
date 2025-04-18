@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Book[] inventory =new Book[20];
@@ -24,5 +26,36 @@ public class Main {
         inventory[17] = new Book(117, "1011234584", "Code Breaker", false, "Alan");
         inventory[18] = new Book(118, "1011234585", "The Last Stand", true, "Max");
         inventory[19] = new Book(119, "1011234586", "Crimson Sky", false, "Scarlett");
+    Scanner scanner = new Scanner(System.in);
+    while(true){
+        System.out.println("Welcome to the library's App\n");
+        System.out.println("(1) Show Available books");
+        System.out.println("(2) Show Checked Out Books");
+        System.out.println("(3) Exit");
+
+        int userChoice = scanner.nextInt();
+        switch(userChoice){
+            case 1:
+                for(int i = 0; i < inventory.length; i++){
+
+                    if(inventory[i].isCheckedOut() != true){
+                        System.out.println(inventory[i].getTitle());
+                    }
+
+                }
+                break;
+            case 3:
+                System.exit(0);
+                break;
+
+        }
+
     }
+
+    }
+    /*public static void checkOut(Scanner scanner , Book[] inventory) {
+        String name =scanner.nextLine();
+        inventory[i].setCheckedOutTo(name);
+
+    }*/
 }

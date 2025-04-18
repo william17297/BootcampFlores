@@ -55,5 +55,5 @@ public class Book {
         CheckedOutTo = checkedOutTo;
     }
 
-    public 
+
 }
