@@ -32,77 +32,22 @@ public class Main {
             System.out.println("Welcome to the library's App\n");
             System.out.println("(1) Show Available books");
             System.out.println("(2) Show Checked Out Books");
-            System.out.println("(3) Exit");
+            System.out.println("(3) Show by title or ISBN");
+            System.out.println("(4) Exit");
 
             int userChoice = scanner.nextInt();
 
             switch(userChoice){
                 case 1:
-                    for(int i = 0; i < inventory.length; i++){
-
-                        if(inventory[i].isCheckedOut() != true){
-                            System.out.println(inventory[i].toString()); //Used the toString method(inserted from generator)
-                        }
-
-                    }
-                    System.out.println("Want to check out a book? \n(1) yes \n(2 - 9) No, take me back to the Main Menu");
-                    userChoice = scanner.nextInt();
-                    switch (userChoice) {
-                        case 1:
-                            System.out.println("What is your name?");
-                            scanner.nextLine();
-                            String name = scanner.nextLine();
-                            System.out.println("Which book would you like to check out? \nBook Name: ");
-
-                            String  bookName = scanner.nextLine();
-                            for(int i = 0; i < inventory.length; i++){
-
-                                if(inventory[i].getTitle().equalsIgnoreCase(bookName)){
-                                    inventory[i].setCheckedOutTo(name);
-                                    inventory[i].setCheckedOut(true);
-                                }
-
-                            }
-
-                            break;
-                        default:
-                            break;
-
-                    }
+                    availableBooks(inventory , scanner);
                     break;
                 case 2:
-                    for(int i = 0; i < inventory.length; i++){
-
-                        if(inventory[i].isCheckedOut() == true){
-                            System.out.println(inventory[i].toString1()); //Used the toString method(inserted from generator)
-                        }
-                    }
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    System.out.println("Want to check in a book?\n (C) Check in book\n (X) -No, take me back to Main Menu");
-                    scanner.nextLine();
-                    String userInput = scanner.nextLine();
-                    char ch = userInput.charAt(0);
-                    ch = Character.toLowerCase(ch); //Normalized
-                    switch (ch){
-                        case 'c':
-
-                            System.out.println("What's the book's name that you would like to check in?");
-
-                            int bookId = scanner.nextInt();
-                            for(int i = 0; i < inventory.length; i++){
-                                if(bookId == inventory[i].getId()) {
-                                    inventory[i].setCheckedOut(false);
-                                    inventory[i].setCheckedOutTo("No one");
-                                }
-
-                            }
-
-                            break;
-                            case 'x':
-                                break;
-                        }
-                        break;
+                    checkedOutBooks(inventory , scanner);
+                    break;
                 case 3:
+                    searchByTitleOrIsbn(inventory , scanner);
+                    break;
+                case 4:
                     System.exit(0);
                     break;
 
@@ -111,6 +56,99 @@ public class Main {
         }
 
     }
+    public static void availableBooks(Book[] inventory , Scanner scanner){
+        for(int i = 0; i < inventory.length; i++){
 
+            if(inventory[i].isCheckedOut() != true){
+                System.out.println(inventory[i].toString()); //Used the toString method(inserted from generator)
+            }
+
+        }
+        System.out.println("Want to check out a book? \n(1) yes \n(2 - 9) No, take me back to the Main Menu");
+        int userChoice = scanner.nextInt();
+        switch (userChoice) {
+            case 1:
+                System.out.println("What is your name?");
+                scanner.nextLine();
+                String name = scanner.nextLine();
+                System.out.println("Which book would you like to check out? \nBook Name: ");
+
+                String  bookName = scanner.nextLine();
+                for(int i = 0; i < inventory.length; i++){
+
+                    if(inventory[i].getTitle().equalsIgnoreCase(bookName)){
+                        inventory[i].setCheckedOutTo(name);
+                        inventory[i].setCheckedOut(true);
+                    }
+
+                }
+
+                break;
+            default:
+                break;
+
+        }
+    }
+    public static void checkedOutBooks(Book[] inventory , Scanner scanner){
+        for(int i = 0; i < inventory.length; i++){
+
+            if(inventory[i].isCheckedOut() == true){
+                System.out.println(inventory[i].toString1()); //Used the toString method(inserted from generator)
+            }
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Want to check in a book?\n (C) Check in book\n (X) -No, take me back to Main Menu");
+        scanner.nextLine();
+        String userInput = scanner.nextLine();
+        char ch = userInput.charAt(0);
+        ch = Character.toLowerCase(ch); //Normalized
+        switch (ch){
+            case 'c':
+
+                System.out.println("What's the book's ID that you would like to check in?");
+
+                int bookId = scanner.nextInt();
+                for(int i = 0; i < inventory.length; i++){
+                    if(bookId == inventory[i].getId()) {
+                        inventory[i].setCheckedOut(false);
+                        inventory[i].setCheckedOutTo("No one");
+                    }
+
+                }
+
+                break;
+            case 'x':
+                break;
+            default:
+                System.out.println("Please Try Again");
+                break;
+        }
+
+    }
+    public static void searchByTitleOrIsbn(Book[] inventory , Scanner scanner){
+        System.out.println("Which book do you want.");
+        scanner.nextLine();g
+        String books = scanner.nextLine();
+        for(int i = 0; i < inventory.length; i++){
+
+            String ignoreCap = inventory[i].getTitle().toLowerCase(); //Normalizing Array string
+            String ignoreUserCap = books.toLowerCase(); //Normalizing User string
+
+              //Used contains to see if characters in user input are in ISBN and title
+              if(inventory[i].getIsbn().contains(books) || ignoreCap.contains(ignoreUserCap)){
+                  System.out.print("Simillar " + inventory[i]);
+                if(inventory[i].isCheckedOut() != true){
+                    System.out.println(" ------- Available To check out");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                }
+                else{
+                    System.out.println(" ------- Not Available");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                }
+            }
+        }
+
+    }
 
 }
+
