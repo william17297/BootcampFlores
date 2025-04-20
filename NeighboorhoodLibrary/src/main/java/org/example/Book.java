@@ -68,17 +68,17 @@ public class Book {
     @Override
     public String toString() {
         return "Book " +
-                "title:" + title +
-                ", id:" + id +
-                ", isbn:" + isbn;
+                "title: " + title +
+                ", id: " + id +
+                ", isbn: " + isbn;
     }
 
     public String toString1() {
         return "Book " +
-                "title:" + title +
-                ", id:" + id +
-                ", isbn:" + isbn +
-                ", Checked out by:" + checkedOutTo;
+                "title: " + title +
+                ", id: " + id +
+                ", isbn: " + isbn +
+                ", Checked out by: " + checkedOutTo;
 
     }
 

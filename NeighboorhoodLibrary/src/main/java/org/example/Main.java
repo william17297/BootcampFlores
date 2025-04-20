@@ -45,12 +45,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while(true){
             System.out.println("Welcome to the library's App\n");
-            System.out.println("(1) Show Available books");
-            System.out.println("(2) Show Checked Out Books");
-            System.out.println("(3) Show by title or ISBN");
-            System.out.println("(4) user");
-            System.out.println("(5) Exit");
-
+            System.out.println("(1) Show Available Books + Check out Books");
+            System.out.println("(2) Show Checked Out Books + Check in Books");
+            System.out.println("(3) Search Books by Title or ISBN");
+            System.out.println("(4) Exit");
             int userChoice = scanner.nextInt();
 
             switch(userChoice){
@@ -64,9 +62,6 @@ public class Main {
                     searchByTitleOrIsbn(inventory , scanner);
                     break;
                 case 4:
-                    searchByName(inventory , listOfUsers , scanner);
-                    break;
-                case 5:
                     System.exit(0);
                     break;
 
@@ -75,24 +70,31 @@ public class Main {
         }
 
     }
-    public static void availableBooks(Book[] inventory ,User [] user, Scanner scanner){
+    public static void availableBooks(Book[] inventory ,User [] user, Scanner scanner) throws InterruptedException{
         for(int i = 0; i < inventory.length; i++){
 
             if(inventory[i].isCheckedOut() != true){
                 System.out.println(inventory[i].toString()); //Used the toString method(inserted from generator)
+                Thread.sleep(400);
             }
 
+
         }
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        Thread.sleep(700);
+        searchByName(inventory ,user , scanner);
     }
-    public static void checkedOutBooks(Book[] inventory , Scanner scanner){
+    public static void checkedOutBooks(Book[] inventory , Scanner scanner) throws InterruptedException{
         for(int i = 0; i < inventory.length; i++){
 
             if(inventory[i].isCheckedOut() == true){
                 System.out.println(inventory[i].toString1()); //Used the toString method(inserted from generator)
+                Thread.sleep(500);
             }
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Want to check in a book?\n (C) Check in book\n (X) -No, take me back to Main Menu");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Want to check in a book?\n (C) Check in book\n (X) No, take me back to Main Menu");
         scanner.nextLine();
         String userInput = scanner.nextLine();
         char ch = userInput.charAt(0);
@@ -113,6 +115,7 @@ public class Main {
 
                 break;
             case 'x':
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 break;
             default:
                 System.out.println("Please Try Again");
@@ -120,28 +123,40 @@ public class Main {
         }
 
     }
-    public static void searchByTitleOrIsbn(Book[] inventory , Scanner scanner){
-        System.out.println("Which book do you want.");
+    public static void searchByTitleOrIsbn(Book[] inventory , Scanner scanner) throws InterruptedException{
+        System.out.println("Which book do you want to find?");
         scanner.nextLine();
         String books = scanner.nextLine();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        int booksFound = 0; //added booksFound to determine whether a book was found at the end of the iteration.
         for(int i = 0; i < inventory.length; i++){
 
             String ignoreCap = inventory[i].getTitle().toLowerCase(); //Normalizing Array string
             String ignoreUserCap = books.toLowerCase(); //Normalizing User string
 
               //Used contains to see if characters in user input are in ISBN and title
-              if(inventory[i].getIsbn().contains(books) || ignoreCap.contains(ignoreUserCap)){
-                  System.out.print("Simillar " + inventory[i]);
+             if(inventory[i].getIsbn().contains(books) || ignoreCap.contains(ignoreUserCap)) {
+                System.out.print("Simillar " + inventory[i]);
 
-                  if(inventory[i].isCheckedOut() != true){
+
+                if (inventory[i].isCheckedOut() != true) {
                     System.out.println(" ------- Available To check out");
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                }
-                else{
+                    Thread.sleep(700);
+
+                } else {
                     System.out.println(" ------- Not Available");
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                    Thread.sleep(700);
                 }
-            }
+                booksFound++;
+            } else if (booksFound == 0 && (i + 1) == inventory.length) {
+                 System.out.println("No books were found");
+                 System.out.println("\n\n\n\n\n\n\n");
+                 Thread.sleep(700);
+             }
+
+
         }
 
     }
@@ -175,7 +190,7 @@ public class Main {
                             if (user[i].getNumberOfBooks() != 3) {
                                 System.out.println("~~~~~~~~~~~~~~~~~~~~~");
                                 System.out.print("Which book would you like to check out? \nBook Name: ");
-                                user[i].setNumberOfBooks(user[i].getNumberOfBooks() + 1);
+                                user[i].setNumberOfBooks(user[i].getNumberOfBooks() + 1); //Used to add to the number of books user has.
                                 scanner.nextLine();
                                 String bookName = scanner.nextLine();
                                 System.out.println("\nBook due in 14 days!");
