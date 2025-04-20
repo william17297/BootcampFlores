@@ -99,26 +99,38 @@ public class Main {
         String userInput = scanner.nextLine();
         char ch = userInput.charAt(0);
         ch = Character.toLowerCase(ch); //Normalized
+        boolean isNotValidId = true;
         switch (ch){
             case 'c':
 
                 System.out.println("What's the book's ID that you would like to check in?");
-
                 int bookId = scanner.nextInt();
+               // System.out.println("\n\n\n\n\n");
                 for(int i = 0; i < inventory.length; i++){
-                    if(bookId == inventory[i].getId()) {
+                    if(bookId == inventory[i].getId() && inventory[i].isCheckedOut()) {
                         inventory[i].setCheckedOut(false);
                         inventory[i].setCheckedOutTo("No one");
+                        isNotValidId = false;
+                        System.out.print("... ...");
+                        Thread.sleep(700);
+                        System.out.print("\nBook Successfully Checked in");
+                        Thread.sleep(1000);
+                        System.out.println("\n");
+                    }
+                    else if ((i + 1) == inventory.length && isNotValidId){
+                        System.out.print("That book is either already checked in or it is not on our registry.");
+                        Thread.sleep(2000);
+                        System.out.println("\n");
                     }
 
                 }
-
+                System.out.println("\n\n\n\n");
                 break;
             case 'x':
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("\n\n\n\n");
                 break;
             default:
-                System.out.println("Please Try Again");
+                System.out.println("Please try again.");
                 break;
         }
 
@@ -127,7 +139,7 @@ public class Main {
         System.out.println("Which book do you want to find?");
         scanner.nextLine();
         String books = scanner.nextLine();
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        System.out.println("\n");
         int booksFound = 0; //added booksFound to determine whether a book was found at the end of the iteration.
         for(int i = 0; i < inventory.length; i++){
 
@@ -153,18 +165,19 @@ public class Main {
             } else if (booksFound == 0 && (i + 1) == inventory.length) {
                  System.out.println("No books were found");
                  System.out.println("\n\n\n\n\n\n\n");
-                 Thread.sleep(700);
+                 Thread.sleep(1000);
              }
 
 
         }
-
+        System.out.println("\n\n\n\n");
     }
     public static void searchByName(Book[] inventory ,User[] user , Scanner scanner) throws InterruptedException { //added the throws for the time thing
         System.out.println("What is your name?");
         scanner.nextLine();
         String name = scanner.nextLine();
         boolean firstLoopIteration = true;
+        boolean isNotSameBook = true;
         for(int i = 0; i < user.length; i++){
               if(user[i] != null){ //To avoid any exception errors
                 if (user[i].getName().equalsIgnoreCase(name)) {
@@ -173,44 +186,50 @@ public class Main {
                         if (user[i].getName().equalsIgnoreCase(inventory[i2].getCheckedOutTo())) { //Checks if the book in the database is associated to the user
 
                             if (firstLoopIteration) {
-                                System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                                System.out.println("These are the book/s you have checked out:");
+                                System.out.println("\nThese are the book/s you have checked out:");
+                                Thread.sleep(700);
                                 firstLoopIteration = false;
                             }
                             System.out.println("--- " + inventory[i2].getTitle() + "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
+                            Thread.sleep(1000);
                         }
                     }
+                    System.out.println("\n\n\n\n");
                     Thread.sleep(1000); //Just to make it more appealing
-                    System.out.println("Want to check out a book? \n(1) yes \n(2 - 9) No, take me back to the Main Menu");
+                    System.out.println("\n\nWant to check out a book? \n(1) yes \n(2 - 9) No, take me back to the Main Menu");
                     int userChoice = scanner.nextInt();
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     switch (userChoice) {
                         case 1:
                             if (user[i].getNumberOfBooks() != 3) {
-                                System.out.println("~~~~~~~~~~~~~~~~~~~~~");
                                 System.out.print("Which book would you like to check out? \nBook Name: ");
-                                user[i].setNumberOfBooks(user[i].getNumberOfBooks() + 1); //Used to add to the number of books user has.
                                 scanner.nextLine();
                                 String bookName = scanner.nextLine();
-                                System.out.println("\nBook due in 14 days!");
                                 for (int i3 = 0; i3 < inventory.length; i3++) {
 
                                     if (inventory[i3].getTitle().equalsIgnoreCase(bookName)) {
                                         inventory[i3].setCheckedOutTo(name);
                                         inventory[i3].setCheckedOut(true);
                                         inventory[i3].setDueDate("Due in 14 days");
-                                    }
+                                        user[i].setNumberOfBooks(user[i].getNumberOfBooks() + 1); //Used to add to the number of books user has.
+                                        isNotSameBook = false; // once the book is found this becomes false since the book the user typed is the same as the inventory's.
+                                        System.out.println("\nBook due in 14 days!");
+                                        Thread.sleep(1000);
+                                        System.out.println("\n\n\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
+                                    }
+                                    else if((i3 + 1) == inventory.length && isNotSameBook){
+                                        System.out.println("That book is not in our registry.");
+                                    }
                                 }
                             } else {
                                 System.out.println("You have reached the maximum number of books you can have checked out!");
-                                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                System.out.println("\n\n\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                                 Thread.sleep(1000);
                             }
 
                             break;
                         default:
+                            System.out.println("\n\n\n\n");
                             break;
                     }
                     break;
@@ -221,8 +240,9 @@ public class Main {
             //This is to display this only once the loop reached the end of the array with an index with an actual name on it
             else if(user[i] == null){
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                System.out.println("That name is not on our registry.\n\n\n\n");
-                Thread.sleep(1000);
+                System.out.println("That name is not on our registry.");
+                  System.out.println("\n\n\n\n");
+                Thread.sleep(1050);
                 break;
 
             }
