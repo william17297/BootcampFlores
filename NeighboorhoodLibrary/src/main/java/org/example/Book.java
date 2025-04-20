@@ -6,13 +6,15 @@ public class Book {
     private String title;
     private boolean isCheckedOut;
     private String checkedOutTo;
+    private String dueDate;
 
-    public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo) {
+    public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo , String dueDate) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.isCheckedOut = isCheckedOut;
         this.checkedOutTo = checkedOutTo;
+        this.dueDate = dueDate;
     }
 
     public int getId() {
@@ -53,6 +55,14 @@ public class Book {
 
     public void setCheckedOutTo(String checkedOutTo) {
         this.checkedOutTo = checkedOutTo;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override
