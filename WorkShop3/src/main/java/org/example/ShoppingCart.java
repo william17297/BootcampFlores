@@ -12,7 +12,8 @@ public class ShoppingCart {
 
     //TODO add product to cart method
     public void addProductToCart(Product product) {
-        throw new UnsupportedOperationException(); //Placeholder for code
+        products.add(product);
+
     }
 
     //TODO remove product from cart method
@@ -31,7 +32,17 @@ public class ShoppingCart {
     }
 
     //TODO get cart total method
-    public double GetCartTotal(double price) {
-        throw new UnsupportedOperationException();
+    public double getCartTotal(double price) {
+
+        return price;
+    }
+
+    public void displayItemsInCart(){
+        System.out.println("Items in cart:");
+        for(int i = 0; i < products.size(); i++ ){
+            Product currentProduct = products.get(i);
+            System.out.println("Sku: " + currentProduct.getSku() + "Name: " + currentProduct.getProductName() +
+                    "Price: " + currentProduct.price + "Department: " + currentProduct.getDepartment());
+        }
     }
 }
