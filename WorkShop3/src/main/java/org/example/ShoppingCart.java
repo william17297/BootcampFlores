@@ -28,38 +28,37 @@ public class ShoppingCart {
     public void removeProduct(String sku) throws InterruptedException {
         int index = 0;
         boolean productMatched = false;
-            for (int i = 0; i < products.size(); i++) {
-                Product currentProduct = products.get(i);
-                if (sku.equalsIgnoreCase(currentProduct.getSku())) {
-                    index = i;
-                    productMatched = true;
-                    break;
-                } else if ((i + 1) == products.size()) {
-                    System.out.println("\n\n\n\nThat is not a valid SKU\n\n\n\n");
-                    break;
-                }
-
-            }
-            if(productMatched) {
-                products.remove(index);
-                System.out.println("\nItem has been removed!\n");
-                Thread.sleep(500);
+        for (int i = 0; i < products.size(); i++) {
+            Product currentProduct = products.get(i);
+            if (sku.equalsIgnoreCase(currentProduct.getSku())) {
+                index = i;
+                productMatched = true;
+                break;
+            } else if ((i + 1) == products.size()) {
+                System.out.println("\n\n\n\nThat is not a valid SKU\n\n\n\n");
+                break;
             }
 
-                //TODO (use one of the bulit in remove methods for strings)
-
-
+        }
+        if(productMatched) {
+            products.remove(index);
+            System.out.println("\nItem has been removed!\n");
+            Thread.sleep(500);
+        }
     }
 
     //TODO get cart total method
-    public double getCartTotal(double price) {
-
-        return price;
+    public double getCartTotal() {
+        double total = 0;
+        for (int i = 0; i < products.size(); i++) {
+            Product currentProduct = products.get(i);
+            total += currentProduct.price;
+        }
+        return total;
     }
 
-    public void displayItemsInCart(Scanner scanner) throws InterruptedException{
-        boolean hasNotSelectedBack = true;
-        if(!products.isEmpty()) {
+    public void displayItemsInCart() throws InterruptedException{
+
             System.out.println("Items in cart:");
             double total = 0;
             for (int i = 0; i < products.size(); i++) {
@@ -68,44 +67,16 @@ public class ShoppingCart {
                         " Price: " + currentProduct.price + " Department: " + currentProduct.getDepartment());
                 total += currentProduct.price;
             }
-            System.out.println("\nYour total is: " + total + "\n");
-        }
-        else if(products.isEmpty()){
-            System.out.println("");
-            System.out.println("\n\n\n\nThere are no items in your cart.\n\n\n\n");
-            Thread.sleep(500);
-        }
-            while (hasNotSelectedBack && !products.isEmpty()) {
-                try {
-                    System.out.println("What would you like to do?");
-                    System.out.println("2.) Remove product from cart");
-                    System.out.println("3.) Back");
+            System.out.printf("\nYour total is: $%.2f\n", total);
 
-                    int choice = Integer.parseInt(scanner.nextLine());
-                    switch (choice) {
-                        case 1:
 
-                            break;
-                        case 2:
-                            System.out.println("\n\n\n\n" + "\n\n\n");
-                            for (int i = 0; i < products.size(); i++) {
-                                Product currentProduct = products.get(i);
-                                System.out.println("Sku: " + currentProduct.getSku() + " Name: " + currentProduct.getProductName() +
-                                        " Price: " + currentProduct.price + " Department: " + currentProduct.getDepartment());
-                            }
-                            System.out.println("\n\nType in the SKU of the product you would like to remove.");
-                            String userSku = scanner.nextLine();
-                            removeProduct(userSku);
-                            break;
-                        case 3:
-                            hasNotSelectedBack = false;
-                            break;
-                        default:
-                            System.out.println("\n\n\n\nPlease pick a choice from 1 through 3\n\n\n\n");
-                    }
-                } catch (NumberFormatException ex) {
-                    System.out.println("\n\n\n\nPlease pick a choice from 1 through 3\n\n\n\n");
-                }
-            }
+
+    }
+    public int numberOfItemsInCart(){
+
+        return products.size();
+    }
+    public void removeAllCartItems() throws InterruptedException {
+        products.clear();
     }
 }
