@@ -12,24 +12,24 @@ public class Main {
     public static void userInterface() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         ShoppingCart shoppingCart = new ShoppingCart();
-        boolean isNotFirstTime = false;
         System.out.println("\n\nWelcome to the online Store!");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n\n");
         Thread.sleep(700);
-        System.out.println("\n\nWhat would you like to do? (pick 1 through 3)");
-        System.out.println("---------------------------");
         while (true) {
             try {
-                System.out.println("1.) Display Products");
-                System.out.println("2.) Display Cart");
-                System.out.println("3.) Exit");
+                System.out.println("\n\n\nWhat would you like to do?");
+                System.out.println("---------------------------");
+
+                System.out.println("1.) \uD83D\uDCE6 Display Products");
+                System.out.println("2.) \uD83D\uDED2 Display Cart");
+                System.out.println("3.) \uD83D\uDED1 Exit");
                 int mainMenuSelection = Integer.parseInt(scanner.nextLine());
                 switch (mainMenuSelection) {
                     case 1:
                         displayProducts(scanner , shoppingCart);
                         break;
                     case 2:
-                        shoppingCart.displayItemsInCart();
+                        shoppingCart.displayItemsInCart(scanner);
                         break;
                     case 3:
                         System.out.println("\n\n\n\n\n -- Thank you for shopping with us! --\n\n\n\n");
@@ -37,14 +37,12 @@ public class Main {
                         System.exit(0);
                         break;
                     default:
-                        System.out.println("\n\n\n -- Please select a number between 1 through 3 --\n\n\n");
-                        //System.out.println("\n\n");
+                        System.out.println("\n\n\n -- Please select a number between 1 through 3 --");
                         break;
 
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("\n\n\n -- Please select a number between 1 through 3 --\n\n\n");
-                //System.out.println("\n\n");
+                System.out.println("\n\n\n -- Please select a number between 1 through 3 --");
             }
         }
     }
@@ -59,12 +57,8 @@ public class Main {
             Thread.sleep(250);
         }
         boolean stay = true; //To go back when the user wants to leave
-        boolean isNotFirstTime = false;
         while (stay) {
             System.out.print("\nWhat would you like to do?");
-            if(!isNotFirstTime){
-                System.out.print(" (pick 1 through 3)\n");
-            }
             System.out.println("\n-----------------------------");
             System.out.println("1.) \uD83D\uDD0D Search for specific product");
             System.out.println("2.) \uD83D\uDED2 Add a product to your cart");
@@ -79,26 +73,23 @@ public class Main {
                         selectProducts(productList, scanner , shoppingCart);
                         break;
                     case 3:
-                        System.out.println("\n\n\n\n -- Please select a number between 1 through 3--"); //For the main menu
-                        System.out.println("   --------------------------------------------\n\n\n");
+                        System.out.println("\n -- Please select a number between 1 through 3--"); //For the main menu
                         stay = false;
 
                         break;
                     default:
-                        System.out.println("\n");
-                        System.out.println("\n -- Please select a number between 1 through 3 --");
-                        isNotFirstTime = true;
+                        //System.out.println("\n");
+                        System.out.println("\n\n -- Please select a number between 1 through 3 --\n\n");
                         break;
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("\n");
-                System.out.println("\n-- Please select a number between 1 through 3 --");
-                isNotFirstTime = true;
+                //System.out.println("\n");
+                System.out.println("\n\n -- Please select a number between 1 through 3 --\n\n");
 
             }
         }
     }
-    public static void searchProducts(List<Product> productList, Scanner scanner , ShoppingCart shoppingCart) {
+    public static void searchProducts(List<Product> productList, Scanner scanner , ShoppingCart shoppingCart) throws InterruptedException{
         System.out.print("Search by SKU: ");
         String userSearch = scanner.nextLine();
         boolean itemFound = false;
@@ -118,7 +109,7 @@ public class Main {
                             hasNotConfirm = false;
                         }
                         else if(userChoice == 2){
-                            System.out.println("\n\n");
+                            System.out.println("\n\n\n");
                             break;
                         }
                         else {
@@ -134,19 +125,22 @@ public class Main {
                 break;
             }
             else if(!itemFound && (i + 1) == productList.size()){
-                System.out.println("We do not have that item.");
+                System.out.println("\n\nWe do not have that item.\n\n");
+                Thread.sleep(700);
             }
 
         }
 
     }
-    public  static void selectProducts(List<Product> productList, Scanner scanner , ShoppingCart shoppingCart) {
+    public  static void selectProducts(List<Product> productList, Scanner scanner , ShoppingCart shoppingCart) throws InterruptedException{
         boolean hasNotSelected = true;
         boolean firstTime = true;
-        while(hasNotSelected){
-        if (firstTime) {
-            System.out.println("Which item would you like to purchase? (select 1 - 12)");
+        System.out.println("\n\n\n\n");
+        for (int i = 0; i < productList.size(); i++) {
+            Product currentProduct = productList.get(i);
+            System.out.println((i + 1) + ".) " + currentProduct.getProductName());
         }
+            System.out.println("\nWhich item would you like to purchase? (select 1 - 12)");
 
         try {
 
@@ -170,7 +164,5 @@ public class Main {
             System.out.println("\n");
             System.out.println("\n-- Please select a number between 1 through 12 --");
         }
-            }
     }
-
 }
