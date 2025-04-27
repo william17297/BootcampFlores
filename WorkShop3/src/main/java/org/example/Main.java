@@ -210,9 +210,9 @@ public class Main {
                     case 1:
                         System.out.print("Enter Payment amount: ");
                         double userPayment = Double.parseDouble(scanner.nextLine());
-                        if (userPayment < shoppingCart.getCartTotal()) {
+                        if (userPayment < shoppingCart.getCartTotal()) {        //if user does not have enough money
                             System.out.println("You do not have enough money to pay!\n\n");
-                        } else if (userPayment == shoppingCart.getCartTotal()) {
+                        } else if (userPayment == shoppingCart.getCartTotal()) { //if user had extra money
                             userPayment -= shoppingCart.getCartTotal();
                             System.out.println("\n\n\n\nProcessing...\n\n\n\n");
                             Thread.sleep(500);
@@ -220,21 +220,23 @@ public class Main {
                             Thread.sleep(500);
                             System.out.println("\n\n\n\nTransaction complete!\n\n\n\n");
                             Thread.sleep(500);
-                            System.out.printf("\n\nYour change is $%.2f", userPayment);
+                            System.out.println("Total: " + shoppingCart.getCartTotal());
+                            System.out.printf("Change: $%.2f", userPayment);
                             hasChoosen = true;
-                            shoppingCart.removeAllCartItems();
+                            shoppingCart.removeAllCartItems(); //clears shopping cart
 
                         } else {
-                            userPayment -= shoppingCart.getCartTotal();
+                            userPayment -= shoppingCart.getCartTotal(); //If user had the same amount
                             System.out.println("\n\n\n\nProcessing...\n\n\n\n");
                             Thread.sleep(500);
                             System.out.println("\n\n\n\n...\n\n\n\n");
                             Thread.sleep(500);
                             System.out.println("\n\n\n\nTransaction complete!\n\n\n\n");
                             Thread.sleep(500);
-                            System.out.printf("\n\nYour change is $%.2f", userPayment);
+                            System.out.println("Total: " + shoppingCart.getCartTotal());
+                            System.out.printf("Your change is $%.2f", userPayment);
                             hasChoosen = true;
-                            shoppingCart.removeAllCartItems();
+                            shoppingCart.removeAllCartItems(); //clears shopping cart
                         }
                         break;
                     case 2:
