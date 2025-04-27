@@ -67,7 +67,7 @@ public class ShoppingCart {
                         " Price: " + currentProduct.price + " Department: " + currentProduct.getDepartment());
                 total += currentProduct.price;
             }
-            System.out.printf("\nYour total is: $%.2f\n", total);
+            System.out.printf("\nTotal: $%.2f\n", total);
 
 
 

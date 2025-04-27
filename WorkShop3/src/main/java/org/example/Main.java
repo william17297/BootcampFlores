@@ -212,19 +212,6 @@ public class Main {
                         double userPayment = Double.parseDouble(scanner.nextLine());
                         if (userPayment < shoppingCart.getCartTotal()) {        //if user does not have enough money
                             System.out.println("You do not have enough money to pay!\n\n");
-                        } else if (userPayment == shoppingCart.getCartTotal()) { //if user had extra money
-                            userPayment -= shoppingCart.getCartTotal();
-                            System.out.println("\n\n\n\nProcessing...\n\n\n\n");
-                            Thread.sleep(500);
-                            System.out.println("\n\n\n\n...\n\n\n\n");
-                            Thread.sleep(500);
-                            System.out.println("\n\n\n\nTransaction complete!\n\n\n\n");
-                            Thread.sleep(500);
-                            System.out.println("Total: " + shoppingCart.getCartTotal());
-                            System.out.printf("Change: $%.2f", userPayment);
-                            hasChoosen = true;
-                            shoppingCart.removeAllCartItems(); //clears shopping cart
-
                         } else {
                             userPayment -= shoppingCart.getCartTotal(); //If user had the same amount
                             System.out.println("\n\n\n\nProcessing...\n\n\n\n");
@@ -233,10 +220,13 @@ public class Main {
                             Thread.sleep(500);
                             System.out.println("\n\n\n\nTransaction complete!\n\n\n\n");
                             Thread.sleep(500);
-                            System.out.println("Total: " + shoppingCart.getCartTotal());
+                            System.out.println("~~~~~~~~~Receipt~~~~~~~~~");
+                            shoppingCart.displayItemsInCart();
+                            System.out.println("Paid: " + shoppingCart.getCartTotal());
                             System.out.printf("Your change is $%.2f", userPayment);
                             hasChoosen = true;
                             shoppingCart.removeAllCartItems(); //clears shopping cart
+                            Thread.sleep(1000);
                         }
                         break;
                     case 2:
