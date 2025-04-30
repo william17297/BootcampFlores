@@ -34,10 +34,10 @@ public class UserInterface {
 
                 switch (userSelection){
                     case 1:
-                        ledger.addEntry(scanner , userSelection);
+                        ledger.addEntry(scanner , 1);
                         break;
                     case 2:
-                        ledger.addEntry(scanner , userSelection);
+                        ledger.addEntry(scanner ,2);
                         break;
                     case 3:
                         ledger.displayEntries(scanner);
