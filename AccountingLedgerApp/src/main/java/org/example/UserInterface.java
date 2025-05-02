@@ -1,20 +1,13 @@
 package org.example;
-
-import java.io.FileReader;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Scanner;
-import java.io.*;
-import java.util.UnknownFormatConversionException;
 
 public class UserInterface {
     public static void startProgram() throws InterruptedException {
         Ledger ledger = new Ledger();
         Scanner scanner = new Scanner(System.in);
         boolean incorrectlySelected = false;
-        System.out.println("\n\nWelcome to the Account Ledger App\n--------------------------------\n\n");
-        Thread.sleep(700);
+        System.out.println("\n\n\nWelcome to the Account Ledger App\n--------------------------------\n\n");
+        Thread.sleep(1000);
         while (true) {
             try {
 
@@ -43,6 +36,10 @@ public class UserInterface {
                         ledger.displayEntries(scanner);
                         break;
                     case 4:
+                        System.out.println("\n\n\n...\n\n\n\n");
+                        Thread.sleep(500);
+                        System.out.println("\n\n\n\nThank you for using our app!\n\n\n\n");
+                        Thread.sleep(1000);
                         System.exit(0);
                         break;
                     default:
@@ -55,8 +52,4 @@ public class UserInterface {
             }
         }
     }
-
-
-
-
 }
