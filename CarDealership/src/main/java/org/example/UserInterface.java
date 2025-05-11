@@ -3,16 +3,16 @@ package org.example;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserInterface {
+public class UserInterface{
     Dealership dealership;
 
-    public void display() {
+    public void display() throws  InterruptedException{
         init();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             try {
-                System.out.println("    ----------Dealership----------");
+                System.out.println("\n\n\n    ----------Dealership----------");
                 System.out.println("1.) Find vehicles within a price range");
                 System.out.println("2.) Find vehicles by make / model");
                 System.out.println("3.) Find vehicles by year range");
@@ -28,38 +28,47 @@ public class UserInterface {
                 switch (choice) {
                     case 1:
                         processGetByPriceRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 2:
                         processGetByMakeModelRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 3:
                         processGetByYearRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 4:
                         processGetByColorRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 5:
                         processGetByMileageRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 6:
                         processGetByVehicleTypeRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 7:
                         processGetAllVehiclesRequest();
+                        Thread.sleep(1000);
                         break;
 
                     case 8:
                         processAddVehicleRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 9:
                         processRemoveVehicleRequest(scanner);
+                        Thread.sleep(1000);
                         break;
 
                     case 0:
@@ -67,10 +76,12 @@ public class UserInterface {
                         break;
 
                     default:
-                        System.out.println("PLEASE ENTER A NUMBER FROM 1 THROUGH 9 OR 0 TO EXIT");
+                        System.out.println("\n\nPLEASE ENTER A NUMBER FROM 1 THROUGH 9 OR 0 TO EXIT");
+                        Thread.sleep(1000);
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("PLEASE ENTER A NUMBER FROM 1 THROUGH 9 OR 0 TO EXIT");
+                System.out.println("\n\nPLEASE ENTER A NUMBER FROM 1 THROUGH 9 OR 0 TO EXIT");
+                Thread.sleep(1000);
             }
         }
 
@@ -100,7 +111,7 @@ public class UserInterface {
         }
         displayVehicles(dealership.getVehicleByPrice(min, max));
         if(dealership.getVehicleByPrice(min, max).isEmpty()){
-            System.out.println("Could not find a vehicle within that price range.");
+            System.out.println("\n\n\n\nCould not find a vehicle within that price range.");
         }
     }
 
@@ -111,7 +122,7 @@ public class UserInterface {
         String model = scanner.nextLine();
         displayVehicles(dealership.getVehicleByMakeModel(maker, model));
         if(dealership.getVehicleByMakeModel(maker, model).isEmpty()){
-            System.out.println("Could not find a vehicle with that make and model.");
+            System.out.println("\n\n\n\nCould not find a vehicle with that make and model.");
         }
     }
 
@@ -140,7 +151,7 @@ public class UserInterface {
         }
         displayVehicles(dealership.getVehicleByYear(year, year2));
         if(dealership.getVehicleByYear(year, year2).isEmpty()){
-            System.out.println("Could not find a vehicle within that year range.");
+            System.out.println("\n\n\n\nCould not find a vehicle within that year range.");
         }
 
 
@@ -151,7 +162,7 @@ public class UserInterface {
         String color = scanner.nextLine();
         displayVehicles(dealership.getVehicleByColor(color));
         if(dealership.getVehicleByColor(color).isEmpty()){
-            System.out.println("Could not find a vehicle with that color.");
+            System.out.println("\n\n\n\nCould not find a vehicle with that color.");
         }
     }
 
@@ -181,7 +192,7 @@ public class UserInterface {
         }
         displayVehicles(dealership.getVehicleByMileage(mileageMin, mileageMax));
         if(dealership.getVehicleByMileage(mileageMin, mileageMax).isEmpty()){
-            System.out.println("Could not find a vehicle within that mileage range.");
+            System.out.println("\n\n\n\nCould not find a vehicle within that mileage range.");
         }
 
     }
@@ -193,7 +204,7 @@ public class UserInterface {
             VehicleType vehicleType = VehicleType.valueOf(scanner.nextLine());
             displayVehicles(dealership.getVehicleByType(vehicleType));
             if(dealership.getVehicleByType(vehicleType).isEmpty()){
-                System.out.println("Sorry, we do not currently have a vehicle with that type.");
+                System.out.println("\n\n\n\nSorry, we do not currently have a vehicle with that type.");
             }
             break;
         }
@@ -211,7 +222,7 @@ public class UserInterface {
     private void processGetAllVehiclesRequest() {
         displayVehicles(dealership.getAllVehicles());
         if(dealership.getAllVehicles().isEmpty()){
-            System.out.println("Sorry, we currently have no cars available.");
+            System.out.println("\n\n\n\nSorry, we currently have no cars available.");
         }
     }
 
@@ -286,6 +297,7 @@ public class UserInterface {
                 modelVehicle, vehicleType, colorVehicle, odometer, price));
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
         dealershipFileManager.saveDealerShip(dealership, 1);
+        System.out.println("\n\n\n\nVehicle added to inventory.");
     }
 
     private void processRemoveVehicleRequest(Scanner scanner) {
@@ -360,6 +372,7 @@ public class UserInterface {
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
         processGetAllVehiclesRequest();
         dealershipFileManager.saveDealerShip(dealership, 2);
+        System.out.println("\n\n\n\nVehicle removed from inventory.");
     }
 
     private void init() {
