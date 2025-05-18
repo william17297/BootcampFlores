@@ -27,15 +27,15 @@ public class ContractDataManager {
             if(contract instanceof SalesContract) {
                 writer.write("SALE|" + contract.getDate() + "|" + contract.getName() + "|" + contract.getEmail() + "\n");
                 writer.write(contract.getVehicle().toString() + "\n");
-                writer.write( ((SalesContract) contract).getTaxAmount() + "|" + ((SalesContract) contract).getRecordingFee() + "|"
-                        + ((SalesContract) contract).getProcessingFee() + "|" + ((SalesContract) contract).WantsFinance() + "|" + contract.getMonthlyPayment() + "\n");
+                writer.write( String.format("%.2f", ((SalesContract) contract).getTaxAmount()) + "|" + String.format("%.2f", ((SalesContract) contract).getRecordingFee()) + "|"
+                        + String.format("%.2f", ((SalesContract) contract).getProcessingFee()) + "|" + ((SalesContract) contract).WantsFinance() + "|" + String.format("%.2f", contract.getMonthlyPayment()) + "\n");
                 writer.close();
             }
             else if(contract instanceof LeaseContract) {
                 writer.write("LEASE|" + contract.getDate() + "|" + contract.getName() + "|" + contract.getEmail() + "\n");
                 writer.write(contract.getVehicle().toString() + "\n");
-                writer.write( ((LeaseContract) contract).getExpectedEndingValue()+ "|" +  contract.getMonthlyPayment() + "|"
-                        + ((LeaseContract) contract).getLeaseFee() + "\n");
+                writer.write( String.format("%.2f", ((LeaseContract) contract).getExpectedEndingValue())+ "|" +  String.format("%.2f", contract.getMonthlyPayment()) + "|"
+                        + String.format("%.2f", ((LeaseContract) contract).getLeaseFee()) + "\n");
                 writer.close();
                 }
         }
