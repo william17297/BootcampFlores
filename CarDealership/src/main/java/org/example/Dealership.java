@@ -134,9 +134,11 @@ public class Dealership {
                     if (wantsFinance) {
                         salesContract = new SalesContract(String.valueOf(LocalDate.now()), name, email, vehicle, true);
                         contractDataManager.saveContract(salesContract);
+                        System.out.println("\n\nContract added.");
                     } else {
                         salesContract = new SalesContract(String.valueOf(LocalDate.now()), name, email, vehicle, false);
                         contractDataManager.saveContract(salesContract);
+                        System.out.println("\n\nContract added.");
                     }
                     break;
                 }
@@ -145,6 +147,7 @@ public class Dealership {
                     int age =  LocalDate.now().getYear() - vehicle.getYear();
                     if(age <= 3) {
                         contractDataManager.saveContract(new LeaseContract(String.valueOf(LocalDate.now()), name, email, vehicle));
+                        System.out.println("\n\nContract added.");
                     }
                     else{
                         System.out.println("You can not lease that vehicle.");
