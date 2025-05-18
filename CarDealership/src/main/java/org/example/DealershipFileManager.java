@@ -48,8 +48,6 @@ public class DealershipFileManager {
                 folder.mkdirs();
             }
 
-            boolean fileExists = file.exists();
-            boolean isEmpty = !fileExists || file.length() == 0;
             if(option == 1) {
                 FileWriter writer = new FileWriter(file , true);
                 Vehicle vehicle = dealership.getAllVehicles().get(dealership.getAllVehicles().size() - 1);

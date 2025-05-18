@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,87 +41,121 @@ public class Dealership {
         this.phone = phone;
     }
 
-    public List<Vehicle> getVehicleByPrice(double min , double max){
+    public List<Vehicle> getVehicleByPrice(double min, double max) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if((vehicle.getPrice() >= min) &&   (vehicle.getPrice() <= max)){
+            if ((vehicle.getPrice() >= min) && (vehicle.getPrice() <= max)) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getVehicleByMakeModel(String make , String model){
+    public List<Vehicle> getVehicleByMakeModel(String make, String model) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if(make.equalsIgnoreCase(vehicle.getMake()) && model.equalsIgnoreCase(vehicle.getModel())){
+            if (make.equalsIgnoreCase(vehicle.getMake()) && model.equalsIgnoreCase(vehicle.getModel())) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getVehicleByYear(double min , double max){
+    public List<Vehicle> getVehicleByYear(double min, double max) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if((vehicle.getYear() >= min) && (vehicle.getYear() <= max)){
+            if ((vehicle.getYear() >= min) && (vehicle.getYear() <= max)) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getVehicleByColor(String color){
+    public List<Vehicle> getVehicleByColor(String color) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if(color.equalsIgnoreCase(vehicle.getColor())){
+            if (color.equalsIgnoreCase(vehicle.getColor())) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getVehicleByMileage(double min , double max){
+    public List<Vehicle> getVehicleByMileage(double min, double max) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if((vehicle.getOdometer() >= min) && (vehicle.getOdometer() <= max)){
+            if ((vehicle.getOdometer() >= min) && (vehicle.getOdometer() <= max)) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getVehicleByType(VehicleType vehicleType){
+    public List<Vehicle> getVehicleByType(VehicleType vehicleType) {
         List<Vehicle> vehicles = new ArrayList<>();
-        for(int i = 0; i < inventory.size(); i++){
+        for (int i = 0; i < inventory.size(); i++) {
             Vehicle vehicle = inventory.get(i);
-            if(vehicleType.equals(vehicle.getVehicleType())){
+            if (vehicleType.equals(vehicle.getVehicleType())) {
                 vehicles.add(inventory.get(i));
             }
         }
         return vehicles;
     }
 
-    public List<Vehicle> getAllVehicles(){
+    public List<Vehicle> getAllVehicles() {
         return inventory;
     }
 
-    public void addVehicle(Vehicle vehicle){
+    public void addVehicle(Vehicle vehicle) {
         inventory.add(vehicle);
 
     }
 
-    public void removeVehicle(Vehicle vehicle){
-        for(int i = 0; i < inventory.size(); i++){
-
-            if(inventory.get(i).toString().equalsIgnoreCase(vehicle.toString())){
+    public void removeVehicle(Vehicle vehicle) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).toString().equalsIgnoreCase(vehicle.toString())) {
                 inventory.remove(inventory.get(i));
             }
         }
     }
+
+    public void sellOrLeaseVehicle(int vin, String name, String email, int choice , boolean wantsFinance) {
+        ContractDataManager contractDataManager = new ContractDataManager();
+        for(int i = 0; i < inventory.size(); i++) {
+            Vehicle vehicle = inventory.get(i);
+            if (vin == vehicle.getVin()) {
+                if(choice == 1) {
+                    SalesContract salesContract;
+                    if (wantsFinance) {
+                        salesContract = new SalesContract(String.valueOf(LocalDate.now()), name, email, vehicle, true);
+                        contractDataManager.saveContract(salesContract);
+                    } else {
+                        salesContract = new SalesContract(String.valueOf(LocalDate.now()), name, email, vehicle, false);
+                        contractDataManager.saveContract(salesContract);
+                    }
+                    break;
+                }
+                else if(choice == 2){
+
+                    int age =  LocalDate.now().getYear() - vehicle.getYear();
+                    if(age <= 3) {
+                        contractDataManager.saveContract(new LeaseContract(String.valueOf(LocalDate.now()), name, email, vehicle));
+                    }
+                    else{
+                        System.out.println("You can not lease that vehicle.");
+                    }
+                    break;
+                }
+            }
+            else if( vin != vehicle.getVin() && i + 1 == inventory.size()){
+                System.out.println("No vehicle registered under that vin.");
+            }
+        }
+    }
+
 }
