@@ -418,6 +418,8 @@ public class UserInterface {
             }
         }
         dealership.sellOrLeaseVehicle(vin, name, email, choice, wantsFinance);
+        DealershipFileManager dealershipFileManager = new DealershipFileManager();
+        dealershipFileManager.saveDealerShip(dealership, 2);
     }
 
     private void init() {

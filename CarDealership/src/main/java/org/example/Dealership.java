@@ -140,6 +140,7 @@ public class Dealership {
                         contractDataManager.saveContract(salesContract);
                         System.out.println("\n\nContract added.");
                     }
+                    removeVehicle(vehicle);
                     break;
                 }
                 else if(choice == 2){
@@ -148,12 +149,14 @@ public class Dealership {
                     if(age <= 3) {
                         contractDataManager.saveContract(new LeaseContract(String.valueOf(LocalDate.now()), name, email, vehicle));
                         System.out.println("\n\nContract added.");
+                        removeVehicle(vehicle);
                     }
                     else{
                         System.out.println("You can not lease that vehicle.");
                     }
                     break;
                 }
+
             }
             else if( vin != vehicle.getVin() && i + 1 == inventory.size()){
                 System.out.println("No vehicle registered under that vin.");
