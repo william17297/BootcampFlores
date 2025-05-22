@@ -55,7 +55,9 @@ public class SalesContract extends Contract{
     @Override
     public double getTotalPrice() {
 
-        return getVehicle().getPrice() + (getVehicle().getPrice() * getTaxAmount()) + getProcessingFee() ;
+
+        //return getVehicle().getPrice() + (getVehicle().getPrice() * getTaxAmount()) + getProcessingFee();
+        return getVehicle().getPrice() + getTaxAmount() + getProcessingFee() + getRecordingFee();
     }
 
     @Override
@@ -70,7 +72,7 @@ public class SalesContract extends Contract{
                 perMonthInterestRate = (5.25 / 12) / 100;
                 months = 24;
             }
-            monthlyPayment = getTotalPrice() * (Math.abs(perMonthInterestRate * Math.pow(1 + perMonthInterestRate, months))       //48 is number of months
+            monthlyPayment = getTotalPrice() * (Math.abs(perMonthInterestRate * Math.pow(1 + perMonthInterestRate, months))
                     / Math.abs(Math.pow(1 + perMonthInterestRate, months) - 1));
             return monthlyPayment;
         } else {
