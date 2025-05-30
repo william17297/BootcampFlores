@@ -24,4 +24,9 @@ public abstract class Topping {
     public void setSandwichSize(int sandwichSize) {
         this.sandwichSize = sandwichSize;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

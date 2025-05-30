@@ -7,6 +7,7 @@ public class Sandwich {
     private BreadType breadType;
     private ArrayList<Topping> toppings;
     private boolean isToasted;
+    private double price;
 
 
     public Sandwich(int size, BreadType breadType, boolean isToasted) {
@@ -52,11 +53,19 @@ public class Sandwich {
         toppings.add(topping);
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {      //TODO List toppings here!!
-        return "Sandwich:" +
-                "size = " + size +
-                ", breadType = " + breadType +
-                ", isToasted = " + isToasted;
+        return
+                "size - " + size + "\"" +
+                ", breadType - " + breadType +
+                ", isToasted - " + isToasted;
     }
 }

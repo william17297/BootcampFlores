@@ -1,8 +1,9 @@
 package org.example;
 
 public class Drink {
-    public String name;
-    public double size;
+    private String name;
+    private double size;
+    private double price;
 
     public Drink(String name, double size) {
         this.name = name;
@@ -23,5 +24,13 @@ public class Drink {
 
     public void setSize(double size) {
         this.size = size;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -61,73 +61,99 @@ public class Order {
         drinks.add(drink);
         if (drink.getSize() == 4) {
             totalPrice += 2.00;
+            drink.setPrice(2.00);
         } else if (drink.getSize() == 8) {
             totalPrice += 2.50;
+            drink.setPrice(2.50);
         } else if (drink.getSize() == 12) {
             totalPrice += 3.00;
+            drink.setPrice(3.00);
         }
     }
 
     public void addChip(Chip chip) {
         chips.add(chip);
         totalPrice += 1.50;
+        chip.setPrice(1.50);
     }
 
     public void addSandwich(Sandwich sandwich) {
         sandwiches.add(sandwich);
         if (sandwich.getSize() == 4) {
             totalPrice += 5.50;
+            sandwich.setPrice(5.50);
         } else if (sandwich.getSize() == 8) {
             totalPrice += 7.00;
+            sandwich.setPrice(7.00);
         } else if (sandwich.getSize() == 12) {
             totalPrice += 8.50;
+            sandwich.setPrice(8.50);
         }
     }
 
     public void addTopping(Sandwich sandwich, Topping topping) {
         sandwich.getToppings().add(topping);
-        long count = sandwich.getToppings().stream()
+        long meatCounter = sandwich.getToppings().stream()
                 .filter(topping1 -> topping1 instanceof Meat).count();
-        if (sandwich.getSize() == 4 && count == 1) {
-            if (topping instanceof Meat) {
+
+        long cheeseCounter = sandwich.getToppings().stream()
+                .filter(topping1 -> topping1 instanceof Cheese).count();
+        if(topping instanceof Meat) {
+            if (sandwich.getSize() == 4 && meatCounter == 1) {
                 totalPrice += 1.00;
-            } else if (topping instanceof Cheese) {
-                totalPrice += .75;
-            }
-        } else if (sandwich.getSize() == 4 && count > 1) {
-            if (topping instanceof Meat) {
+                ((Meat) topping).setPrice(1.00);
+
+            } else if (sandwich.getSize() == 4 && meatCounter > 1) {
                 totalPrice += .50;
-            } else if (topping instanceof Cheese) {
-                totalPrice += .30;
-            }
-        } else if (sandwich.getSize() == 8 && count == 1) {
-            if (topping instanceof Meat) {
+                ((Meat) topping).setPrice(.50);
+
+            } else if (sandwich.getSize() == 8 && meatCounter == 1) {
                 totalPrice += 2.00;
-            } else if (topping instanceof Cheese) {
-                totalPrice += 1.50;
-            }
-        } else if (sandwich.getSize() == 8 && count > 1) {
-            if (topping instanceof Meat) {
+                ((Meat) topping).setPrice(2.00);
+            } else if (sandwich.getSize() == 8 && meatCounter > 1) {
                 totalPrice += 1.00;
-            } else if (topping instanceof Cheese) {
-                totalPrice += .60;
+                ((Meat) topping).setPrice(1.00);
+            } else if (sandwich.getSize() == 12 && meatCounter == 1) {
+                totalPrice += 3.00;
+                ((Meat) topping).setPrice(3.00);
+
+            } else if (sandwich.getSize() == 12 && meatCounter > 1) {
+                totalPrice += 1.50;
+                ((Meat) topping).setPrice(1.50);
             }
         }
-        if (sandwich.getSize() == 12 && count == 1) {
-            if (topping instanceof Meat) {
-                totalPrice += 3.00;
-            } else if (topping instanceof Cheese) {
-                totalPrice += 1.50;
+        if(topping instanceof Cheese){
+            if (sandwich.getSize() == 4 && cheeseCounter == 1) {
+                totalPrice += .75;
+                ((Cheese) topping).setPrice(.75);
             }
-
-        } else if (sandwich.getSize() == 12 && count > 1) {
-            if (topping instanceof Meat) {
+            else if (sandwich.getSize() == 4 && cheeseCounter > 1) {
+                totalPrice += .30;
+                ((Cheese) topping).setPrice(.30);
+            }
+            else if (sandwich.getSize() == 8 && cheeseCounter == 1) {
                 totalPrice += 1.50;
-            } else if (topping instanceof Cheese) {
+                ((Cheese) topping).setPrice(1.50);
+            }
+            else if (sandwich.getSize() == 8 && cheeseCounter > 1) {
+                totalPrice += .60;
+                ((Cheese) topping).setPrice(.60);
+            }
+            else if (sandwich.getSize() == 12 && cheeseCounter == 1) {
+                totalPrice += 1.50;
+                ((Cheese) topping).setPrice(1.50);
+            }
+            else if (sandwich.getSize() == 12 && cheeseCounter > 1) {
                 totalPrice += .90;
+                ((Cheese) topping).setPrice(.90);
             }
         }
     }
+
+    public void subtractTotalPrice(double price){
+        this.totalPrice -= price;
+    }
+
 }
 
 
