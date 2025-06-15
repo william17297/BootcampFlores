@@ -1,11 +1,16 @@
 package org.example;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
     Dealership dealership;
+    String[] args;
+
+    public UserInterface(String[] args) {
+        this.args = args;
+        dealership = new Dealership(args);
+    }
 
     public void display() throws InterruptedException {
         init();
@@ -292,17 +297,11 @@ public class UserInterface {
         }
         dealership.addVehicle(new Vehicle(vin, year, makeVehicle,
                 modelVehicle, vehicleType, colorVehicle, odometer, price));
-        DealershipFileManager dealershipFileManager = new DealershipFileManager();
-        dealershipFileManager.saveDealerShip(dealership, 1);  //Saving a vehicle that was added to inventory can be done with option 1 or 2.
         System.out.println("\n\n\n\nVehicle added to inventory.");
     }
 
     private void processRemoveVehicleRequest(Scanner scanner) {
         int vin;
-        int year;
-        int odometer;
-        double price;
-        VehicleType vehicleType;
         while (true) {
             try {
                 System.out.print("Enter vin: ");
@@ -312,57 +311,7 @@ public class UserInterface {
                 System.out.println("Please enter a number.");
             }
         }
-        while (true) {
-            try {
-                System.out.print("Enter year: ");
-                year = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException ex) {
-                System.out.println("Please enter a number.");
-            }
-        }
-        System.out.print("Enter make: ");
-        String makeVehicle = scanner.nextLine();
-        System.out.print("Enter model: ");
-        String modelVehicle = scanner.nextLine();
-        while (true) {
-            try {
-                System.out.print("Enter type: ");
-                vehicleType = VehicleType.valueOf(scanner.nextLine());
-                break;
-            } catch (IllegalArgumentException ex) {
-                System.out.println(" Enter one of these Vehicle types:\n" +
-                        "    SUV,\n" +
-                        "    truck,\n" +
-                        "    sedan,\n" +
-                        "    Impala,\n" +
-                        "    wagon");
-            }
-        }
-        System.out.print("Enter color: ");
-        String colorVehicle = scanner.nextLine();
-        while (true) {
-            try {
-                System.out.print("Enter odometer: ");
-                odometer = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch (NumberFormatException ex) {
-                System.out.println("Please enter a number.");
-            }
-        }
-        while (true) {
-            try {
-                System.out.print("Enter price: ");
-                price = Double.parseDouble(scanner.nextLine());
-                break;
-            } catch (NumberFormatException ex) {
-                System.out.println("Enter a number.");
-            }
-        }
-        dealership.removeVehicle(new Vehicle(vin, year, makeVehicle,
-                modelVehicle, vehicleType, colorVehicle, odometer, price));
-        DealershipFileManager dealershipFileManager = new DealershipFileManager();
-        dealershipFileManager.saveDealerShip(dealership, 2);
+        dealership.removeVehicle(vin);
         System.out.println("\n\n\n\nVehicle removed from inventory.");
     }
 
@@ -388,12 +337,12 @@ public class UserInterface {
         name = scanner.nextLine();
         System.out.print("Email: ");
         email = scanner.nextLine();
-        if(choice == 1) {
+        if (choice == 1) {
             while (true) {
                 try {
                     System.out.println("Would you like to finance? 1.) Yes or 2.) No");
                     choice2 = Integer.parseInt(scanner.nextLine());
-                    if(choice2 == 1){
+                    if (choice2 == 1) {
                         wantsFinance = true;
                         break;
                     } else if (choice2 == 2) {
@@ -404,8 +353,7 @@ public class UserInterface {
                     System.out.println("Please type a number.");
                 }
             }
-        }
-        else {
+        } else {
             wantsFinance = false;
         }
         while (true) {
@@ -418,13 +366,11 @@ public class UserInterface {
             }
         }
         dealership.sellOrLeaseVehicle(vin, name, email, choice, wantsFinance);
-        DealershipFileManager dealershipFileManager = new DealershipFileManager();
-        dealershipFileManager.saveDealerShip(dealership, 2);
     }
 
     private void init() {
-        DealershipFileManager dealershipFileManager = new DealershipFileManager();
-        this.dealership = dealershipFileManager.getDealerShip();
+        //DealershipFileManager dealershipFileManager = new DealershipFileManager();
+        //this.dealership = dealershipFileManager.getDealerShip();
 
     }
 

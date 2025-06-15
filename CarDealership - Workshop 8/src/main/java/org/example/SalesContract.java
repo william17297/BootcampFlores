@@ -44,7 +44,7 @@ public class SalesContract extends Contract{
         this.processingFee = processingFee;
     }
 
-    public boolean WantsFinance() {
+    public boolean wantsFinance() {
         return wantsFinance;
     }
 
