@@ -71,13 +71,12 @@ public class ShoppingCartController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + userName);
         }
         int userId = user.getId();
-        //ShoppingCart shoppingCart = shoppingCartDao.getByUserId(userId);
         ShoppingCart shoppingCart = getCart(principal);
         if (!shoppingCart.contains(product_id)) {
              shoppingCartDao.create(userId, product_id);
 
         } else if (shoppingCart.contains(product_id)) {
-            shoppingCartDao.update(product_id, shoppingCart.get(product_id), userId, shoppingCart.get(product_id).getQuantity() + 1);
+            shoppingCartDao.update(product_id, userId, shoppingCart.get(product_id).getQuantity() + 1);
 
         }
         return shoppingCartDao.getByUserId(userId);
@@ -100,15 +99,11 @@ public class ShoppingCartController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + userName);
         }
         int userId = user.getId();
-        if (!getCart(principal).contains(product_id)) {
-            //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        boolean updated = shoppingCartDao.update(product_id, shoppingCartItem, userId, shoppingCartItem.getQuantity());
-        if (updated) {
-            //return new ResponseEntity<>(HttpStatus.OK);
-        }
+
+         shoppingCartDao.update(product_id, userId, shoppingCartItem.getQuantity());
+
         return getCart(principal);
-        //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 
     }
 

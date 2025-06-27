@@ -86,7 +86,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
 
 
     @Override
-    public boolean update(int productId, ShoppingCartItem shoppingCartItem, int userId, int quantity) {
+    public boolean update(int productId, int userId, int quantity) {
         String sql = "UPDATE shopping_cart" +
                 " SET quantity = ? " +
                 " WHERE product_id = ? AND user_id = ?;";
@@ -104,8 +104,6 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Update " + getByUserId(userId).get(productId).getProduct().getName());
-        System.out.println("Update " + getByUserId(userId).get(productId).getQuantity());
         return true;
     }
 
